@@ -2,9 +2,11 @@
 
 namespace App\Services\Contracts;
 
-use App\Models\User;
+use App\DTOs\LoginDTO;
+use App\DTOs\RegisterDTO;
+
 interface UserServiceInterface
 {
-    public function login(array $data);
-    public function register(array $data);
+    public function login(LoginDTO $data);
+    public function register(RegisterDTO $data);
 }
