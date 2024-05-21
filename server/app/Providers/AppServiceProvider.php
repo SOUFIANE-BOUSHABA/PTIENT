@@ -26,6 +26,16 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\Contracts\UserServiceInterface::class,
             \App\Services\Implementations\UserService::class
         );
+
+        $this->app->bind(
+            \App\Repositories\Contracts\ProfileRepositoryInterface::class,
+            \App\Repositories\Implementations\ProfileRepository::class
+        );
+    
+        $this->app->bind(
+            \App\Services\Contracts\ProfileServiceInterface::class,
+            \App\Services\Implementations\ProfileService::class
+        );
     }
 
     /**
