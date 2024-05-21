@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Services\Implementations\UserService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -53,7 +51,7 @@ class AuthController extends Controller
 
 
 
-    
+
     public function logout()
     {
         return $this->userService->logout();
