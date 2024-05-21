@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Services\Implementations;
-
+use App\DTOs\LoginDTO;
+use App\DTOs\RegisterDTO;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Support\Facades\Auth;
@@ -17,20 +18,28 @@ class UserService implements UserServiceInterface
         $this->userRepository = $userRepository;
     }
 
-    public function login(array $data)
+    public function login(LoginDTO $loginDTO)
     {
-        $user = $this->userRepository->findByUsername($data['username']);
-        if ($user && Hash::check($data['password'], $user->password)) {
-            return $user->createToken('API Token')->plainTextToken;
+        if (Auth::attempt(['username' => $loginDTO->username, 'password' => $loginDTO->password])) {
+            return Auth::user()->createToken('authToken')->plainTextToken;
         }
+
         return null;
     }
 
-    public function register(array $data)
-    {
-        $data['password'] = Hash::make($data['password']);
-        return $this->userRepository->create($data);
+
+    public function register(RegisterDTO $registerDTO)
+    {  
+        $registerDTO->password = Hash::make($registerDTO->password);
+        $user = $this->userRepository->create([
+            'username' => $registerDTO->username,
+            'password' => $registerDTO->password,
+            'privilege' => $registerDTO->privilege,
+        ]);
+
+        return $user;
     }
+
 
 
 

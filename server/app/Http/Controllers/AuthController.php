@@ -21,7 +21,8 @@ class AuthController extends Controller
 
     public function login(LoginRequest  $request)
     {
-        $token = $this->userService->login($request->all());
+        $loginDTO = $request->toDTO();
+        $token = $this->userService->login($loginDTO);
 
         if (!$token) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -36,7 +37,8 @@ class AuthController extends Controller
 
     public function register(RegistrationRequest $request)
     {
-        $user = $this->userService->register($request->all());
+        $registerDTO = $request->toDTO();
+        $user = $this->userService->register($registerDTO);
 
         return response()->json($user, 201);
     }

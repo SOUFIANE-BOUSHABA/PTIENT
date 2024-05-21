@@ -12,7 +12,7 @@ class UserRepository implements UserRepositoryInterface
         return User::where('username', $username)->first();
     }
 
-    public function create(array $data)
+    public function create(array $data): User
     {
         return User::create($data);
     }
